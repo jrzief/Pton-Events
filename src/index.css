@@ -1,0 +1,81 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.events-control {
+  text-align: center;
+  border: 1px solid #5101d1;
+  padding: 1rem;
+  margin: 2rem auto;
+  width: 60rem;
+  max-width: 80%;
+}
+
+.btn {
+  background: #5101d1;
+  font: inherit;
+  border: 1px solid #5100d1;
+  border-radius: 3px;
+  padding: 0.25rem 1rem;
+  margin-right: 1rem;
+  box-shadow: 1px 1px 5px rgbs(0, 0, 0, 0.26);
+  color: white;
+  cursor: pointer;
+}
+
+.btn:hover,
+.btn:active {
+  background: #6219d6;
+  border-color: #6219d6;
+}
+
+.text-phrases {
+  text-align: center;
+  padding: 0;
+}
+
+.listKey {
+  font: inherit;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  margin-left: 2rem;
+  width: 20rem;
+  max-width: 40%;
+  color: #250993;
+}
+.list-items {
+  margin-left: 1.5rem;
+}
+.list-items ul {
+  font: inherit;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  align-items: center;
+  max-width: 80%;
+  margin-bottom: 10px;
+}
+
+.list-items ul li {
+  margin: 0 1rem;
+}
+
+.list-items ul p {
+  margin-left: 30px;
+  margin-bottom: 25px;
+}
+
+.dateColor {
+  color: #a96999;
+}
+
+.descriptionFont {
+  font-size: 0.75rem;
+  font-weight: bolder;
+  color: #250993;
+  vertical-align: bottom;
+}
