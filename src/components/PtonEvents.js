@@ -109,31 +109,67 @@ class PtonEvents extends Component {
           <h1>Princeton Events Today</h1>
         </div>
         <div className="events-control">
-          <button className="btn" onClick={this.allEvents}>
+          <button
+            className="btn"
+            onClick={this.allEvents}
+            style={{ backgroundColor: "#f14e4e" }}
+          >
             All Events
           </button>
-          <button className="btn" onClick={this.musicEvents}>
+          <button
+            className="btn"
+            onClick={this.musicEvents}
+            style={{ backgroundColor: "#9a4ef1" }}
+          >
             Music
           </button>
-          <button className="btn" onClick={this.artEvents}>
+          <button
+            className="btn"
+            onClick={this.artEvents}
+            style={{ backgroundColor: "#f1bb4e" }}
+          >
             Art
           </button>
-          <button className="btn" onClick={this.wwsEvents}>
+          <button
+            className="btn"
+            onClick={this.wwsEvents}
+            style={{ backgroundColor: "#84f14e" }}
+          >
             WWS
           </button>
-          <button className="btn" onClick={this.theaterEvents}>
+          <button
+            className="btn"
+            onClick={this.theaterEvents}
+            style={{ backgroundColor: "#4ef18f" }}
+          >
             Theater
           </button>
-          <button className="btn" onClick={this.historyEvents}>
+          <button
+            className="btn"
+            onClick={this.historyEvents}
+            style={{ backgroundColor: "#4e9af1" }}
+          >
             History
           </button>
-          <button className="btn" onClick={this.exhibitionEvents}>
+          <button
+            className="btn"
+            onClick={this.exhibitionEvents}
+            style={{ backgroundColor: " #f14ebd" }}
+          >
             Exhibitions
           </button>
-          <button className="btn" onClick={this.businessEvents}>
+          <button
+            className="btn"
+            onClick={this.businessEvents}
+            style={{ backgroundColor: "#84f14e" }}
+          >
             Business
           </button>
-          <button className="btn" onClick={this.lectureEvents}>
+          <button
+            className="btn"
+            onClick={this.lectureEvents}
+            style={{ backgroundColor: "#6219d6" }}
+          >
             Lectures
           </button>
         </div>
@@ -148,6 +184,7 @@ class PtonEvents extends Component {
             return (
               <div key={i}>
                 <div className="listKey">{key}</div>
+                <hr />
                 {value.map((item, j) => (
                   <div className="list-items" key={j}>
                     <ul>
@@ -158,6 +195,7 @@ class PtonEvents extends Component {
                         <a href={item.url}>Event link</a>
                       </li>
                       <p className="descriptionFont">{item.description}</p>
+                      <hr className="style-one" />
                     </ul>
                   </div>
                 ))}
