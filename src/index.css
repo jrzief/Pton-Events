@@ -785,10 +785,10 @@ li:nth-child(21) {
 }
 
 hr {
-  width: 13%;
+  width: 5%;
   height: 6px;
   margin-left: 25px;
-  background-color: #666;
+  background-color: rgb(233, 243, 243);
   border: 0 none;
   margin-top: 5px;
   margin-bottom: 10px;

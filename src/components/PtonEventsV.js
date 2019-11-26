@@ -402,6 +402,8 @@ class PtonEventsV extends Component {
                   {this.state.group}
                 </div> */}
                 {/* <hr /> */}
+                <br />
+                <br />
                 <div className="itemContainer">
                   {value.map((item, j) => (
                     <>
