@@ -1,10 +1,10 @@
-import React from "react";
-import PtonEvents from "./components/PtonEvents";
-import "./index.css";
+import React from 'react';
+import PtonEventsV from './components/PtonEventsV';
+import './index.css';
 
 const App = () => (
   <div>
-    <PtonEvents />
+    <PtonEventsV />
   </div>
 );
 

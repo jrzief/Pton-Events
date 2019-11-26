@@ -1,99 +1,99 @@
-import React, { Component } from "react";
-import events from "../data/events.json";
-import _ from "lodash";
+import React, { Component } from 'react';
+import events from '../data/events.json';
+import _ from 'lodash';
 
 class PtonEvents extends Component {
   state = {
     creating: false,
     events: events,
     filteredEvents: [],
-    group: "All Events"
+    group: 'All Events'
   };
 
   allEvents = () => {
     const allEvts = this.state.events;
-    this.setState({ filteredEvents: allEvts, group: "All Events" });
+    this.setState({ filteredEvents: allEvts, group: 'All Events' });
   };
   musicEvents = () => {
     const musicEvts = this.state.events.filter(
       music =>
-        music.tags === "Live Music" ||
-        music.tags === "Classical Music" ||
-        music.tags === "Pop Music" ||
-        music.tags === "Jazz and Blues" ||
-        music.tags === "Folk Music"
+        music.tags === 'Live Music' ||
+        music.tags === 'Classical Music' ||
+        music.tags === 'Pop Music' ||
+        music.tags === 'Jazz and Blues' ||
+        music.tags === 'Folk Music'
     );
     this.setState({
       filteredEvents: musicEvts,
-      group: "Music Events"
+      group: 'Music Events'
     });
   };
   artEvents = () => {
-    const artEvts = this.state.events.filter(art => art.tags === "Art");
-    this.setState({ filteredEvents: artEvts, group: "Art" });
+    const artEvts = this.state.events.filter(art => art.tags === 'Art');
+    this.setState({ filteredEvents: artEvts, group: 'Art' });
   };
   wwsEvents = () => {
     const wwsEvts = this.state.events.filter(
       wws =>
-        wws.tags === "Policy" ||
-        wws.tags === "Finance, Fiscal Policy, Foreign Policy"
+        wws.tags === 'Policy' ||
+        wws.tags === 'Finance, Fiscal Policy, Foreign Policy'
     );
     this.setState({
       filteredEvents: wwsEvts,
-      group: "Woodrow Wison School Events"
+      group: 'Woodrow Wison School Events'
     });
   };
   theaterEvents = () => {
     const theaterEvts = this.state.events.filter(
-      theater => theater.tags === "On Stage"
+      theater => theater.tags === 'On Stage'
     );
-    this.setState({ filteredEvents: theaterEvts, group: "Theater" });
+    this.setState({ filteredEvents: theaterEvts, group: 'Theater' });
   };
   historyEvents = () => {
     const historyEvts = this.state.events.filter(
-      hist => hist.tags === "History"
+      hist => hist.tags === 'History'
     );
     this.setState({
       filteredEvents: historyEvts,
-      group: "History Events"
+      group: 'History Events'
     });
   };
   exhibitionEvents = () => {
     const exhibitionEvts = this.state.events.filter(
-      exhib => exhib.tags === "Exhibitions"
+      exhib => exhib.tags === 'Exhibitions'
     );
     this.setState({
       filteredEvents: exhibitionEvts,
-      group: "Exhibitions"
+      group: 'Exhibitions'
     });
   };
   businessEvents = () => {
     const businessEvts = this.state.events.filter(
-      busi => busi.tags === "Business Meetings"
+      busi => busi.tags === 'Business Meetings'
     );
     this.setState({
       filteredEvents: businessEvts,
-      group: "Business Events"
+      group: 'Business Events'
     });
   };
   lectureEvents = () => {
     const lectureEvts = this.state.events.filter(
-      lect => lect.tags === "Lectures"
+      lect => lect.tags === 'Lectures'
     );
     this.setState({
       filteredEvents: lectureEvts,
-      group: "Lectures"
+      group: 'Lectures'
     });
   };
 
   render() {
     let eventList;
-    if (this.state.group === "All Events") {
+    if (this.state.group === 'All Events') {
       eventList = this.state.events;
     } else {
       eventList = this.state.filteredEvents;
     }
-    const groupedEvents = _.groupBy(eventList, "tags");
+    const groupedEvents = _.groupBy(eventList, 'tags');
 
     /* const eventList = this.state.events.map(event => {
       return (
@@ -108,75 +108,91 @@ class PtonEvents extends Component {
         <div className="text-phrases">
           <h1>Princeton Events Today</h1>
         </div>
+        <div className="menuContainer">
+          <button className="mbox artBtn">Art</button>
+          <button className="mbox theaterBtn">Theater</button>
+          <button className="mbox festivalsBtn">Festivals</button>
+          <div className="mbox musicBtn">
+            Live Music
+            <button className="classicalBtn">Classical</button>
+            <button className="jazzBtn">Jazz</button>
+            <div className="folkBtn">Folk</div>
+          </div>
+          <button className="mbox wwsBtn">WWS</button>
+          <button className="mbox historyBtn">History</button>
+          <button className="mbox lecturesBtn">Lectures</button>
+          <button className="mbox literatiBtn">Literati</button>
+        </div>
+
         <div className="events-control">
           <button
             className="btn"
             onClick={this.allEvents}
-            style={{ backgroundColor: "#f14e4e" }}
+            style={{ backgroundColor: '#f14e4e' }}
           >
             All Events
           </button>
           <button
             className="btn"
             onClick={this.musicEvents}
-            style={{ backgroundColor: "#9a4ef1" }}
+            style={{ backgroundColor: '#9a4ef1' }}
           >
             Music
           </button>
           <button
             className="btn"
             onClick={this.artEvents}
-            style={{ backgroundColor: "#f1bb4e" }}
+            style={{ backgroundColor: '#f1bb4e' }}
           >
             Art
           </button>
           <button
             className="btn"
             onClick={this.wwsEvents}
-            style={{ backgroundColor: "#84f14e" }}
+            style={{ backgroundColor: '#84f14e' }}
           >
             WWS
           </button>
           <button
             className="btn"
             onClick={this.theaterEvents}
-            style={{ backgroundColor: "#4ef18f" }}
+            style={{ backgroundColor: '#4ef18f' }}
           >
             Theater
           </button>
           <button
             className="btn"
             onClick={this.historyEvents}
-            style={{ backgroundColor: "#4e9af1" }}
+            style={{ backgroundColor: '#4e9af1' }}
           >
             History
           </button>
           <button
             className="btn"
             onClick={this.exhibitionEvents}
-            style={{ backgroundColor: " #f14ebd" }}
+            style={{ backgroundColor: ' #f14ebd' }}
           >
             Exhibitions
           </button>
           <button
             className="btn"
             onClick={this.businessEvents}
-            style={{ backgroundColor: "#84f14e" }}
+            style={{ backgroundColor: '#84f14e' }}
           >
             Business
           </button>
           <button
             className="btn"
             onClick={this.lectureEvents}
-            style={{ backgroundColor: "#6219d6" }}
+            style={{ backgroundColor: '#6219d6' }}
           >
             Lectures
           </button>
         </div>
         <div className="text-phrases">
           <h2>
-            {" "}
-            <p>{this.state.group}</p>{" "}
+            {' '}
+            <p>{this.state.group}</p>{' '}
           </h2>
         </div>
         <div>
@@ -191,7 +207,7 @@ class PtonEvents extends Component {
                       <li className="dateColor">{item.date}</li>
                       <li>{item.name}</li>
                       <li>
-                        {" "}
+                        {' '}
                         <a href={item.url}>Event link</a>
                       </li>
                       <p className="descriptionFont">{item.description}</p>
