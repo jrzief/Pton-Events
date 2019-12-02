@@ -272,7 +272,6 @@ class PtonEventsV extends Component {
             <li>WWS</li>
             <li>History</li>
             <li className="musicBtn">
-              Live Music
               <div className="lbox classicalBtn">Classical</div>
               <div className="lbox jazzBtn">Jazz</div>
               <div className="lbox folkBtn">Folk</div>

@@ -7,17 +7,22 @@ import chroma from 'chroma-js';
 //import ModalPopup from './ModalPopup';
 import Modal from './Modal';
 import Button from './Button';
+import './events.css';
 
 class PtonEventsVII extends Component {
   state = {
     creating: false,
-    events: null,
+    events: [],
+    shuffledEvents: [],
     filteredEvents: [],
     group: 'All Events',
+    groupColor: '',
+    color: 'black',
     modalOpen: false,
     eventName: '',
     eventDescription: '',
     eventUrl: '',
+    shuffled: true,
     showMap: false
   };
   //const [modalOpen, setModalOpen] = useState(false);
@@ -33,9 +38,11 @@ class PtonEventsVII extends Component {
       url: d.url
     })).then(data =>
       this.setState({
-        events: data
+        events: data,
+        shuffledEvents: _.shuffle(data)
       })
     );
+    //this.allEvents();
     //console.log(this.state.events);
   }
 
@@ -51,7 +58,7 @@ class PtonEventsVII extends Component {
       eventUrl: itemurl,
       showMap: true
     });
-    console.log(this.state.eventData, this.state.eventUrl);
+    // console.log(this.state.eventData, this.state.eventUrl);
     /*  return (
       <ModalPopup
         isOpen={this.state.modalOpen}
@@ -61,12 +68,33 @@ class PtonEventsVII extends Component {
       />
     ); */
   };
+  //reshuff = _.shuffle(this.state.events);
 
-  allEvents = () => {
-    const allEvts = this.state.events;
-    this.setState({ filteredEvents: allEvts, group: 'All Events' });
-    console.log(this.state.events);
+  allEvents = async () => {
+    const allEvts = _.shuffle(this.state.events);
+    this.setState({
+      shuffledEvents: allEvts,
+      group: 'All Events',
+      groupColor: '#567b99',
+      color: 'black',
+      shuffled: true
+    });
+    console.log(this.state.shuffledEvents);
   };
+
+  // if (this.state.group === 'All Events') {
+  //   // const shuffledevents = _.shuffle(this.state.events);
+  //   // console.log('Shuffled', shuffledevents);
+  //   eventList = this.state.shuffledEvents;
+  // } else {
+  //   eventList = this.state.filteredEvents;
+  //   //this.setState({ shuffled: false });
+  // }
+  // if (!eventList) {
+  //   console.log('Loading');
+  // } else {
+  //   console.log('EventList', eventList);
+  // }
 
   //console.log(allEvents);
 
@@ -81,14 +109,69 @@ class PtonEventsVII extends Component {
     );
     this.setState({
       filteredEvents: musicEvts,
-      group: 'Music Events'
+      //group: 'Music Events',
+      group: 'Music',
+      groupColor: '#d62d24',
+      color: 'black',
+      shuffled: false
+    });
+  };
+  classicalEvents = () => {
+    const classicalEvts = this.state.events.filter(
+      classical => classical.tags === 'Classical Music'
+    );
+    this.setState({
+      filteredEvents: classicalEvts,
+      group: 'Classical Music',
+      groupColor: '#d62d24',
+      color: 'black',
+      shuffled: false
+    });
+  };
+  jazzEvents = () => {
+    const jazzEvts = this.state.events.filter(
+      jazz => jazz.tags === 'Jazz and Blues'
+    );
+    this.setState({
+      filteredEvents: jazzEvts,
+      group: 'Jazz/Blues',
+      groupColor: '#d62d24',
+      color: 'black',
+      shuffled: false
+    });
+  };
+  folkEvents = () => {
+    const folkEvts = this.state.events.filter(
+      folk => folk.tags === 'Folk Music'
+    );
+    this.setState({
+      filteredEvents: folkEvts,
+      group: 'Folk',
+      groupColor: '#d62d24',
+      color: 'black',
+      shuffled: false
+    });
+  };
+  popEvents = () => {
+    const popEvts = this.state.events.filter(pop => pop.tags === 'Pop Music');
+    this.setState({
+      filteredEvents: popEvts,
+      group: 'Pop Music',
+      groupColor: '#d62d24',
+      color: 'black',
+      shuffled: false
     });
   };
   artEvents = () => {
     const artEvts = this.state.events.filter(art => art.tags === 'Art');
-    this.setState({ filteredEvents: artEvts, group: 'Art' });
+    this.setState({
+      filteredEvents: artEvts,
+      group: 'Art',
+      color: 'black',
+      groupColor: '#e5eeeb'
+    });
   };
-  wwsEvents = () => {
+  /*  wwsEvents = () => {
     const wwsEvts = this.state.events.filter(
       wws =>
         wws.tags === 'Policy' ||
@@ -96,22 +179,60 @@ class PtonEventsVII extends Component {
     );
     this.setState({
       filteredEvents: wwsEvts,
-      group: 'Woodrow Wilson School Events'
+      group: 'Woodrow Wilson School Events',
+      shuffled: false
     });
-  };
+  }; */
   theaterEvents = () => {
     const theaterEvts = this.state.events.filter(
       theater => theater.tags === 'On Stage'
     );
-    this.setState({ filteredEvents: theaterEvts, group: 'Theater' });
+    this.setState({
+      filteredEvents: theaterEvts,
+      group: 'Theater',
+      groupColor: '#f2c968',
+      color: 'black',
+      shuffled: false
+    });
   };
-  historyEvents = () => {
+  lifestyleEvents = () => {
+    const lifestyleEvts = this.state.events.filter(
+      lifestyle =>
+        lifestyle.tags === 'Wellness' ||
+        lifestyle.tags === 'Dancing' ||
+        lifestyle.tags === 'Socials'
+    );
+    this.setState({
+      filteredEvents: lifestyleEvts,
+      group: 'Lifestyle',
+      groupColor: '#130409',
+      color: 'white',
+      shuffled: false
+    });
+  };
+  /*  historyEvents = () => {
     const historyEvts = this.state.events.filter(
       hist => hist.tags === 'History'
     );
     this.setState({
       filteredEvents: historyEvts,
-      group: 'History Events'
+      group: 'History Events',
+      shuffled: false
+    });
+  }; */
+  specialEvents = () => {
+    const specialEvts = this.state.events.filter(
+      special =>
+        special.tags === 'Special Events' ||
+        special.tags === 'Exhibitions' ||
+        special.tages === 'Fairs and Festivals'
+    );
+    this.setState({
+      filteredEvents: specialEvts,
+      group: 'Special Events',
+      groupColor: '#fcfde7',
+      color: 'black',
+      shuffled: false
     });
   };
   exhibitionEvents = () => {
@@ -120,7 +241,8 @@ class PtonEventsVII extends Component {
     );
     this.setState({
       filteredEvents: exhibitionEvts,
-      group: 'Exhibitions'
+      group: 'Exhibitions',
+      shuffled: false
     });
   };
   businessEvents = () => {
@@ -129,16 +251,24 @@ class PtonEventsVII extends Component {
     );
     this.setState({
       filteredEvents: businessEvts,
-      group: 'Business Events'
+      group: 'Business Events',
+      shuffled: false
     });
   };
   lectureEvents = () => {
     const lectureEvts = this.state.events.filter(
-      lect => lect.tags === 'Lectures'
+      lect =>
+        lect.tags === 'Lectures' ||
+        lect.tags === 'Policy' ||
+        lect.tags === 'Finance, Fiscal Policy, Foreign Policy' ||
+        lect.tags === 'History'
     );
     this.setState({
       filteredEvents: lectureEvts,
-      group: 'Lectures'
+      group: 'Lectures',
+      groupColor: '#241785',
+      color: 'white',
+      shuffled: false
     });
   };
 
@@ -179,13 +309,26 @@ class PtonEventsVII extends Component {
 
   //};
   render() {
-    let eventList;
+    console.log('Line207', this.state.events);
+    console.log('Line208', this.state.shuffledEvents);
+    let eventList1, eventList2;
+    const { filteredEvents, shuffledEvents } = this.state;
     if (this.state.group === 'All Events') {
-      eventList = this.state.events;
+      // const shuffledevents = _.shuffle(this.state.events);
+      // console.log('Shuffle this.state.shuffledEvents;
+      eventList1 = shuffledEvents;
     } else {
-      eventList = this.state.filteredEvents;
+      eventList2 = filteredEvents;
+      //this.setState({ shuffled: false });
     }
-    const groupedEvents = _.groupBy(eventList, 'tags');
+    if (!eventList1) {
+      console.log('Loading');
+    } else {
+      console.log('EventList1', eventList1);
+    }
+
+    const groupedEvents = _.groupBy(filteredEvents, 'tags');
+    //const shuffEvents = this.state.shuffledEvents;
 
     const chColor = chroma.brewer.PuBu;
     //const colord3 = d3Scale.scaleOrdinal(d3Scale.schemeCategory20c);
@@ -195,29 +338,80 @@ class PtonEventsVII extends Component {
       .mode('lch')
       .colors(18);
 
-    const mycolor = {
-      'All Events': '#D92AAD',
-      Art: '#009933',
-      Theater: '#0091BD',
-      'History Events': '#A3AAAE',
-      'Woodrow Wilson School Events': '#d30909',
-      Lectures: '#F4ABAA',
-      'Classical Music': '#1F70C1',
-      'Music Events': '#7FBA02',
-      'Fairs and Festivals': '#008DD2',
-      'Special Events': '#FA0505',
-      'Business Meetings': '#0171C5',
-      Exhibitions: '#14149F',
-      Dancing: '#77B900',
-      Literati: '#F70000',
-      Wellness: '#034EA1',
-      Socials: '#7F7F7F',
-      Policy: '#d30909',
-      'Live Music': '#FF0000',
-      Sports: '#D92AAD'
+    const myGroupColor = {
+      // 'All Events': '#D92AAD',
+      Art: '#e5eeeb',
+      Theater: '#f2c968',
+      Lectures: '#241785',
+      Music: '#d62d24',
+      'Classical Music': '#d62d24',
+      'Jazz/Blues': '#d62d24',
+      Folk: '#d62d24',
+      'Pop Music': '#d62d24',
+      Lifestyle: '#130409',
+      'Special Events': '#fcfde7'
     };
 
+    const myCharColor = {
+      'All Events': 'rgba(0, 0, 0, 0.897',
+      Art: 'rgba(0, 0, 0, 0.897',
+      Theater: 'rgba(0, 0, 0, 0.897',
+      Lectures: 'white',
+      'Classical Music': 'rgba(0, 0, 0, 0.897',
+      'Music Events': 'rgba(0, 0, 0, 0.897',
+      'Special Events': 'rgba(0, 0, 0, 0.897',
+      Lifestyle: 'white'
+    };
+
+    const myAllEventsColor = {
+      'All Events': 'rgba(0, 0, 0, 0.897',
+      Art: 'rgba(0, 0, 0, 0.897',
+      Theater: 'rgba(0, 0, 0, 0.897',
+      'History Events': 'rgba(0, 0, 0, 0.897',
+      'Woodrow Wilson School Events': 'rgba(0, 0, 0, 0.897',
+      Lectures: 'rgba(0, 0, 0, 0.897',
+      'Classical Music': 'rgba(0, 0, 0, 0.897',
+      'Music Events': 'rgba(0, 0, 0, 0.897',
+      'Fairs and Festivals': 'rgba(0, 0, 0, 0.897',
+      'Special Events': 'rgba(0, 0, 0, 0.897',
+      'Business Meetings': 'rgba(0, 0, 0, 0.897',
+      Exhibitions: 'rgba(0, 0, 0, 0.897',
+      Dancing: 'rgba(0, 0, 0, 0.897',
+      Literati: 'rgba(0, 0, 0, 0.897',
+      Wellness: 'rgba(0, 0, 0, 0.897',
+      Socials: 'white',
+      Policy: 'white',
+      'Live Music': '#d62d24',
+      Sports: 'rgba(0, 0, 0, 0.897',
+      Lifestyle: 'white'
+    };
+
+    const mycolor = {
+      'All Events': '#D92AAD',
+      Art: '#e5eeeb',
+      Theater: '#f2c968',
+      'History Events': '#241785',
+      'Woodrow Wilson School Events': '#241785',
+      Lectures: '#241785',
+      'Classical Music': '#d62d24',
+      'Music Events': '#d62d24',
+      'Fairs and Festivals': '#fcfde7',
+      'Special Events': '#fcfde7',
+      'Business Meetings': '#0171C5',
+      Exhibitions: '#fcfde7',
+      Dancing: '#130409',
+      Literati: '#241785',
+      Wellness: '#130409',
+      Socials: '#130409',
+      Policy: '#241785',
+      'Live Music': '#d62d24',
+      Sports: '#D92AAD',
+      Lifestyle: '#130409'
+    };
+    const myGroupColorArr = Object.keys(myGroupColor);
+    const myCharColorArr = Object.keys(myCharColor);
     const mycolorArr = Object.keys(mycolor);
+    const myAllEventsColorArr = Object.keys(myAllEventsColor);
     console.log(mycolorArr);
     console.log(this.state.group);
     console.log('Color', mycolorArr.indexOf(this.state.group));
@@ -226,7 +420,18 @@ class PtonEventsVII extends Component {
     console.log('RealColor', myRealColor);
     const getRealColor = () =>
       mycolor[mycolorArr[mycolorArr.indexOf(this.state.group)]] || 'white';
-    console.log(getRealColor);
+    const getRealGroupColor = () =>
+      myGroupColor[
+        myGroupColorArr[myGroupColorArr.indexOf(this.state.group)]
+      ] || 'white';
+    const getRealCharColor = () =>
+      myCharColor[myCharColorArr[myCharColorArr.indexOf(this.state.group)]] ||
+      'white';
+    //const getRealAllEventsColor = () =>
+    //  myAllEventsColor[myAllEventsColorArr[myAllEventsColorArr.indexOf(item.tags)]] || 'white';
+    console.log(getRealColor());
+    console.log(getRealGroupColor());
+    console.log(getRealCharColor());
 
     /* const eventList = this.state.events.map(event => {
       return (
@@ -241,96 +446,68 @@ class PtonEventsVII extends Component {
         <div className="text-phrases">
           <h1>Princeton Events Today</h1>
         </div>
-        {/*  <div className="outer">
-          <div className="menuContainer">
-            <button className="mbox artBtn">Art</button>
-            <button className="mbox theaterBtn">Theater</button>
-            <button className="mbox festivalsBtn">Festivals</button>
-            <div className="mbox musicBtn">
-              Live Music
-              <button className="mbox classicalBtn">Classical</button>
-              <button className="mbox jazzBtn">Jazz</button>
-              <button className="mbox folkBtn">Folk</button>
-            </div>
-            <button className="mbox wwsBtn">WWS</button>
-            <button className="mbox historyBtn">History</button>
-            <button className="mbox lecturesBtn">Lectures</button>
-            <button className="mbox literatiBtn">Literati</button>
-            <button className="mbox businessBtn">Business</button>
-            <button className="mbox exhibitBtn">Exhibitions</button>
-            <button className="mbox specialsBtn">Special Events</button>
-          </div>
-        </div> */}
+
         <br />
         <br />
         <div className="mondr1">
           <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
-        </div>
-        {/*  <ul>
-            <li>Art</li>
-            <li>Theater</li>
-            <li>Festivals</li>
-            <li>WWS</li>
-            <li>History</li>
-            <li className="musicBtn">
-              Live Music
-              <div className="lbox classicalBtn">Classical</div>
-              <div className="lbox jazzBtn">Jazz</div>
-              <div className="lbox folkBtn">Folk</div>
+            <li className="lbox" onClick={this.artEvents}>
+              Art
             </li>
-            <li>Sports</li>
-            <li>Business</li>
-            <li>Literati</li>
-            <li>Exhibits</li>
-            <li>Special Events</li>
-          </ul> */}
-
-        <br />
-        <br />
-
-        {/*  <div className="shape2-outer">
-          <div className="shapeContainer">
-            <div className="gbox artB">Art</div>
-            <div className="gbox theaterB">Theater</div>
-            <div className="gbox festivalsB">Festivals</div>
-            <div className="gbox livemusicB">Live Music</div>
-            <div className="gbox classicalB">Classical</div>
-            <div className="gbox jazzB">Jazz</div>
-            <div className="gbox folkB">Folk</div>
-            <div className="gbox wwsB">WWS</div>
-            <div className="gbox historyB">History</div>
-            <div className="gbox lecturesB">Lectures</div>
-            <div className="gbox literatiB">Literati</div>
-            <div className="gbox businessB">Business</div>
-            <div className="gbox exhibitB">Exhibitions</div>
-            <div className="gbox specialsB">Special Events</div>
-            <div className="gbox wellnessB">Wellness</div>
-            <div className="gbox dancingB">Dancing</div>
+            <li></li>
+            <li className="lbox" onClick={this.theaterEvents}>
+              Theater
+            </li>
+            <li>
+              <span className="lbox text4" onClick={this.specialEvents}>
+                Special Events
+              </span>
+            </li>
+            <li></li>
+            <li>
+              <div className="allmusic lbox text5" onClick={this.musicEvents}>
+                MUSIC
+              </div>
+              <div className="lbox classical" onClick={this.classicalEvents}>
+                Classical
+              </div>
+              <div className="lbox jazz" onClick={this.jazzEvents}>
+                Jazz / Blues
+              </div>
+              <div className="lbox folk" onClick={this.folkEvents}>
+                Folk
+              </div>
+              <div className="lbox live" onClick={this.popEvents}>
+                Pop
+              </div>
+            </li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li className="lbox" onClick={this.lifestyleEvents}>
+              Lifestyle
+            </li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li className="lbox" onClick={this.lectureEvents}>
+              Lectures
+            </li>
+            <li className="lbox"></li>
+            {/*<li>18</li>
+            <li>19</li>
+            <li className="lbox">20 Special Events</li> */}
+          </ul>
+          <div className="allEvents" onClick={this.allEvents}>
+            All Events
           </div>
         </div>
- */}
-        <div className="events-control">
+
+        <br />
+
+        {/*  <div className="events-control">
           <button
             className="btn"
             onClick={this.allEvents}
@@ -394,13 +571,15 @@ class PtonEventsVII extends Component {
           >
             Lectures
           </button>
-        </div>
+        </div> */}
         <div
           className="text-phrases"
           style={{
-            color:
-              mycolor[mycolorArr[mycolorArr.indexOf(this.state.group)]] ||
-              'white'
+            backgroundColor: this.state.groupColor || 'white',
+            color: this.state.color
+
+            /* mycolor[mycolorArr[mycolorArr.indexOf(this.state.group)]] ||
+              'white' */
           }}
         >
           <h2>
@@ -409,10 +588,64 @@ class PtonEventsVII extends Component {
           </h2>
         </div>
         <div>
-          {Object.entries(groupedEvents).map(([key, value], i) => {
-            return (
-              <div key={i}>
-                {/* <div
+          {this.state.shuffled && (
+            /*  (!this.eventList ? (
+              <div>Loading</div>
+            ) :  */
+            <div className="itemContainer">
+              {shuffledEvents.map((item, i) => (
+                <div
+                  className="eventItems"
+                  onClick={() =>
+                    this.getModal(item.name, item.description, item.url)
+                  }
+                  key={i}
+                  style={{
+                    backgroundColor:
+                      mycolor[mycolorArr[mycolorArr.indexOf(item.tags)]] ||
+                      'white',
+                    fontWeight: 500
+                  }}
+                >
+                  <div
+                    style={{
+                      color:
+                        myAllEventsColor[
+                          myAllEventsColorArr[
+                            myAllEventsColorArr.indexOf(item.tags)
+                          ]
+                        ] || 'white'
+                    }}
+                  >
+                    {item.name}
+                  </div>
+                  <div>
+                    {' '}
+                    <a href={item.url}>Event link</a>
+                  </div>
+                </div>
+              ))}
+              <Modal
+                show={this.state.showMap}
+                onCancel={this.closeModalHandler}
+                header={this.state.eventName}
+                contentClass="place-item__modal-content"
+                footerClass="place-item__modal-actions"
+                footer={<Button onClick={this.closeModalHandler}>CLOSE</Button>}
+              >
+                <div className="map-container">
+                  <h3>{this.state.eventDescription}</h3>
+                  <a href={this.state.eventUrl}>Event link</a>
+                  <h2>View The Map!</h2>
+                </div>
+              </Modal>
+            </div>
+          )}
+          {!this.state.shuffled &&
+            Object.entries(groupedEvents).map(([key, value], i) => {
+              return (
+                <div key={i}>
+                  {/* <div
                   className="text-phrase"
                   style={{
                     color:
@@ -423,77 +656,88 @@ class PtonEventsVII extends Component {
                 >
                   {this.state.group}
                 </div> */}
-                {/* <hr /> */}
-                <br />
-                <br />
-                <div className="itemContainer">
-                  {value.map((item, j) => (
-                    <>
-                      <div
-                        onClick={
-                          () =>
-                            this.getModal(item.name, item.description, item.url)
-                          //this.openModalHandler()
-                        }
-                        className="eventItems"
-                        key={j}
-                        style={{
-                          backgroundColor:
-                            mycolor[
-                              mycolorArr[mycolorArr.indexOf(item.tags)]
-                            ] || 'white'
-                        }}
-                      >
-                        {/*  <ModalPopup
+                  {/* <hr /> */}
+                  <br />
+                  <br />
+                  <div className="itemContainer">
+                    {value.map((item, j) => (
+                      <>
+                        <div
+                          onClick={
+                            () =>
+                              this.getModal(
+                                item.name,
+                                item.description,
+                                item.url
+                              )
+                            //this.openModalHandler()
+                          }
+                          className="eventItems"
+                          key={j}
+                          style={{
+                            backgroundColor:
+                              myGroupColor[
+                                myGroupColorArr[
+                                  myGroupColorArr.indexOf(this.state.group)
+                                ]
+                              ] || 'white'
+                            /* mycolor[
+                                mycolorArr[mycolorArr.indexOf(item.tags)]
+                              ] || 'white' */
+                          }}
+                        >
+                          {/*  <ModalPopup
                           isOpen={this.state.modalOpen}
                           winner={this.state.eventData}
                           close={() => this.setState({ modalOpen: false })}
                           description={this.state.eventDescription}
                         /> */}
-                        {/* <div className="dateColor">{item.date}</div> */}
-                        <div>{item.name}</div>
-                        <div>
-                          {' '}
-                          <a href={item.url}>Event link</a>
-                        </div>
-                        {/* <p className="descriptionFont">{item.description}</p>
+                          {/* <div className="dateColor">{item.date}</div> */}
+                          <div style={{ color: this.state.color }}>
+                            {item.name}
+                          </div>
+                          <div>
+                            {' '}
+                            <a href={item.url}>Event link</a>
+                          </div>
+                          {/* <p className="descriptionFont">{item.description}</p>
                           <hr className="style-one" /> */}
-                        {/* <button
+                          {/* <button
                           onClick={() =>
                             this.getModal(item.name, item.description, item.url)
                           }
                         > 
                           Modal
                         </button>*/}
+                        </div>
+                      </>
+                    ))}
+                    <Modal
+                      show={this.state.showMap}
+                      onCancel={this.closeModalHandler}
+                      header={this.state.eventName}
+                      contentClass="place-item__modal-content"
+                      footerClass="place-item__modal-actions"
+                      footer={
+                        <Button onClick={this.closeModalHandler}>CLOSE</Button>
+                      }
+                    >
+                      <div className="map-container">
+                        <h3>{this.state.eventDescription}</h3>
+                        <a href={this.state.eventUrl}>Event link</a>
+                        <h2>View The Map!</h2>
                       </div>
-                    </>
-                  ))}
-                  <Modal
-                    show={this.state.showMap}
-                    onCancel={this.closeModalHandler}
-                    header={this.state.eventName}
-                    contentClass="place-item__modal-content"
-                    footerClass="place-item__modal-actions"
-                    footer={
-                      <Button onClick={this.closeModalHandler}>CLOSE</Button>
-                    }
-                  >
-                    <div className="map-container">
-                      <h3>{this.state.eventDescription}</h3>
-                      <a href={this.state.eventUrl}>Event link</a>
-                      <h2>View The Map!</h2>
-                    </div>
-                  </Modal>
-                  {/*  <ModalPopup
+                    </Modal>
+                    {/*  <ModalPopup
                     isOpen={this.state.modalOpen}
                     winner={this.state.eventData}
                     close={() => this.setState({ modalOpen: false })}
                     description={this.state.eventDescription}
                   /> */}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
 
         {/* <ul className="events__list">{eventList}</ul> */}
@@ -501,6 +745,7 @@ class PtonEventsVII extends Component {
     );
   }
 }
+//}
 
 /* const ComplexList = () => (
   <ul>
